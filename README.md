@@ -1,2 +1,2 @@
 # JGF-DeepLearning
-Deep Learning algorithms 
+Deep Learning algorithms by KUKURUZA
