@@ -1,11 +1,10 @@
-# JGF-DeepLearning
-Deep Learning algorithms 
+# JGF-DeepLearning - Deep Learning algorithms 
 
 Visualize deeper layers in CIFAR10 under Tensorflow by displaying images which gain the highest response from neurons. Written for cifar10 model (by KUKURUZA).
 
 TODO: Adapting the code in Alexnet model under Tensorflow to get the information about this output layers for locate objetcs in input images to avoid objects image processing of unwanted objects.
 
-ALEXNET TENSORFLOW implementation
+ALEXNET TENSORFLOW implementation:
 
 Homepage:
 http://www.cs.toronto.edu/~guerzhoy/tf_alexnet/
