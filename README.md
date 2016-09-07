@@ -2,7 +2,7 @@
 
 Visualize deeper layers in CIFAR10 under Tensorflow by displaying images which gain the highest response from neurons. Written for cifar10 model (https://gist.github.com/kukuruza).
 
-TODO: Adapting the code in pretrained Alexnet model under Tensorflow to get the information about this output layers, locate objetcs in input images and post-processing them (MatLab) to avoid extra-image processing of unwanted objects.
+TODO: Adapting the code in pretrained Alexnet model under Tensorflow to get the information about this output layers, locate objects in input images and post-processing them (MatLab) to avoid extra-image processing of unwanted objects.
 
 ALEXNET TENSORFLOW implementation:
 
