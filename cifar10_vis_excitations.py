@@ -16,37 +16,26 @@
 '''
 Visualize what pooling and convolutional neurons learned
   by displaying images that gain highest response.
-
 Motivation:
-
   It is straightforward to visualize filters in the first convolutional layer, 
     but not in deeper layers. One way to visualize a neuron is too find images
     that the neuron fires most one. Inspired by:
-
   [1]: "Rich feature hierarchies for accurate object detection and semantic 
        segmentation" by Ross Girshick et al., CVPR, 2014, section 3.1
-
-
 This file has two functions for visualizing high responses:
   1) visualize_conv - for some channels in a convolutional layer.
   2) visualize_pooling - for some neurons in a pooling layer
-
 Note that for a convolutional filter, the max response is searched across 
   both images and x,y coordinates. At the same time, for a pooling neuron,
   the max response is searched only acrooss images because the coordinates
   of pooling neurons are fixed (while conv. filter is shared across x,y.)
-
 Implementation issues:
-
   The search for maximum across images is approximate -- only one best image 
     from each batch can be included into the result. This is done for simplicity
     -- please contribute by generalizing to several images per batch.
-
   I use OpenCV for drawing. If you can change to PIL or whatever, 
     please propose a patch.
-
 Usage:
-
   0) Get python bindings to OpenCV
   1) Examine function 'visualize_excitations'. It has an example of visualizing
        conv2 and pool2 layers.
@@ -62,7 +51,7 @@ from __future__ import division
 from __future__ import print_function
 
 import logging
-#import cv2
+import cv2
 import numpy as np
 import tensorflow as tf
 from bisect import bisect_right
@@ -131,7 +120,6 @@ def visualize_conv     (sess, images, layer, channels,
   '''
   TL;DR: display some 'images' that receive the strongest response 
     from user-selected 'channels' of a convolutional 'layer'.
-
   A 64-channel convolutional layer is consists of 64 filters.
   For each of the channels, the corresponding filter naturally fires diffrently
     on different pixels of different images. We're interested in highest responses.
@@ -140,7 +128,6 @@ def visualize_conv     (sess, images, layer, channels,
   We collect 'num_excitations' images for each filter and stack them into a row.
     Rows from all filters of interest are stacked vetically into the final map.
     For each image, the response value and the receptive field are visualized.
-
   Args:
     sess:            tensorflow session
     images:          tensor for source images
@@ -157,7 +144,6 @@ def visualize_conv     (sess, images, layer, channels,
     dst_height:      will resize each image to have this height
   Returns:
     excitation_map:   a ready-to-show image, similar to R-CNN paper.
-
   * Suggestions on how to automatically infer half_receptive_field, accum_padding,
     and stride are welcome.
   '''
@@ -178,9 +164,9 @@ def visualize_conv     (sess, images, layer, channels,
   responses, best_ids = tf.nn.top_k(layer1, k=1)
 
   # make three lists of empty lists
-  resps = [list([]) for _ in xrange(len(channels))]
-  imges = [list([]) for _ in xrange(len(channels))]
-  yx    = [list([]) for _ in xrange(len(channels))]
+  resps = [list([]) for _ in range(len(channels))]
+  imges = [list([]) for _ in range(len(channels))]
+  yx    = [list([]) for _ in range(len(channels))]
 
   # Start the queue runners.
   coord = tf.train.Coordinator()
@@ -283,7 +269,6 @@ def visualize_pooling  (sess, images, layer, neurons,
   '''
   TL;DR: display some 'images' that receive the strongest response 
     from user-selected neurons of a pooling 'layer'.
-
   A pooling layer is of shape Y x X x Channels.
     Each neuron from that layer is connected to a pixel in the output feature map.
     This function visualizes what a neuron have learned by displying images 
@@ -291,7 +276,6 @@ def visualize_pooling  (sess, images, layer, neurons,
     We collect 'num_excitations' images for each neuron and stack them into a row.
       Rows from all neurons of interest are stacked vetically into the final map.
       For each image, the response value and the receptive field are visualized.
-
   Args:
     sess:            tensorflow session
     images:          tensor for source images
@@ -308,7 +292,6 @@ def visualize_pooling  (sess, images, layer, neurons,
     dst_height:      will resize each image to have this height
   Returns:
     excitation_map:   a ready-to-show image, similar to R-CNN paper.
-
   * Suggestions on how to automatically infer half_receptive_field, accum_padding,
     and stride are welcome.
   '''
@@ -320,8 +303,8 @@ def visualize_pooling  (sess, images, layer, neurons,
 
   # make two lists of empty lists
   # will store num_excitations of best layer/images for each neuron
-  resps = [list([]) for _ in xrange(len(neurons))]
-  imges = [list([]) for _ in xrange(len(neurons))]
+  resps = [list([]) for _ in range(len(neurons))]
+  imges = [list([]) for _ in range(len(neurons))]
 
   # Start the queue runners.
   coord = tf.train.Coordinator()
@@ -467,4 +450,3 @@ def main(argv=None):  # pylint: disable=unused-argument
 
 if __name__ == '__main__':
   tf.app.run()
-
